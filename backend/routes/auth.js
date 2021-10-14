@@ -15,16 +15,17 @@ router.post('/createuser', [
   body('password', 'Password must be atleast 5 characters').isLength({ min: 5 }),
 ],
   async (req, res) => {
+    let success = false;
     // Return errors and Bad Request
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({success, errors: errors.array() });
     }
     try {
       let user = await User.findOne({ email: req.body.email });
       console.log(user);
       if (user) {
-        return res.status(400).json({ error: 'Email already registered' })
+        return res.status(400).json({success, error: 'Email already registered' })
       }
 
       const salt = await bcrypt.genSalt(10);
@@ -41,8 +42,9 @@ router.post('/createuser', [
         }
       }
       const authToken = jwt.sign(data, JWT_SECRET);
+      success = true;
       // console.log(jwtData);
-      res.json({authToken});
+      res.json({success,authToken});
 
       // res.json(user);
     } catch (error) {
@@ -59,7 +61,7 @@ router.post('/login', [
   body('email', 'Enter a valid email').isEmail(),
   body('password', "Enter your password").exists(),
 ], async (req, res) => {
-
+  let success = false;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -69,11 +71,13 @@ router.post('/login', [
   try {
     let user = await User.findOne({ email });
     if (!user) {
+      success = false;
       return res.status(400).json({ errors: "Invalid Credential" });
     }
     const passwordcompare = await bcrypt.compare(password, user.password);
     if (!passwordcompare) {
-      return res.status(400).json({ errors: "Invalid Credential" });
+      success = false;
+      return res.status(400).json({ success, errors: "Invalid Credential" });
     }
 
     const data = {
@@ -83,7 +87,8 @@ router.post('/login', [
     }
 
     const authToken = jwt.sign(data, JWT_SECRET);
-    res.json({ authToken });
+    success = true;
+    res.json({ success, authToken });
   } catch (error) {
     console.log(error);
     res.status(500).send("Interal Server Error");
