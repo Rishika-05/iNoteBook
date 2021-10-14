@@ -6,7 +6,8 @@ const Signin = (props) => {
     let history = useHistory();
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await fetch('http://localhost:5000/api/auth/login', {
+        // const response = await fetch('http://localhost:5000/api/auth/login', {
+        const response = await fetch('https://inotebook05.herokuapp.com/api/auth/login', {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             headers: {
                 'Content-Type': 'application/json',
@@ -17,8 +18,8 @@ const Signin = (props) => {
         console.log(json);
         if (json.success) {
             // save auth token & redirect
-            localStorage.setItem('token', json.authtoken);
-            props.showAlert('Registered succesfully!', 'success');
+            localStorage.setItem('token', json.authToken);
+            props.showAlert('Logged in!', 'success');
             history.push('/');
         }
         else {

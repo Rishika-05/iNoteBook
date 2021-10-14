@@ -7,7 +7,8 @@ const Signup = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const { name, email, password } = credendials;
-        const response = await fetch('http://localhost:5000/api/auth/createuser', {
+        // const response = await fetch('http://localhost:5000/api/auth/createuser', {
+        const response = await fetch('https://inotebook05.herokuapp.com/api/auth/createuser', {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             headers: {
                 'Content-Type': 'application/json',
@@ -18,9 +19,9 @@ const Signup = (props) => {
         console.log(json);
         if (json.success) {
             // save auth token & redirect
-            localStorage.setItem('token', json.authtoken);
+            localStorage.setItem('token', json.authToken);
             history.push('/login');
-            props.showAlert('Logged in succesfully!', 'success');
+            props.showAlert('Registered succesfully!', 'success');
         } else {
             props.showAlert('Invalid Credentials', 'danger');
         }
