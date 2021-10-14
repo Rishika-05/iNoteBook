@@ -31,7 +31,7 @@ const Signup = (props) => {
     }
 
     return (
-        <div className="container m-auto" style={{ width: '450px' }}>
+        <div className="container m-auto">
             <h3 className='my-3 mb-2' >Create an Account</h3>
             <form onSubmit={handleSubmit} >
                 <div className="mb-3">
