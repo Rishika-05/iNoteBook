@@ -4,7 +4,7 @@ import React from 'react'
 const About = () => {
 
     return (
-        <div className='container' style={{color: props.mode === 'dark' ? 'white' : 'black'}}>
+        <div className='container'>
       <h2>About Us</h2>
       <div className="accordion" id="accordionExample">
         <div className="accordion-item">
