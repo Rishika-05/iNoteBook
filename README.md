@@ -14,7 +14,7 @@
    
  **DESCRIPTION**
  
-   It is a website that store personal notes and store them. User can update, delete any previously made note. It is responsive and works on any browser.
+   It is a website for making notes and store them on the cloud. User can update, delete any previously made note. It is responsive and works on any browser.
  
 
 
